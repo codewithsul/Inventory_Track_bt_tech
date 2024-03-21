@@ -1,5 +1,6 @@
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .App-logo {
@@ -7,53 +8,177 @@
   pointer-events: none;
 }
 
-.NavBar{
+.NavBar {
   display: flex;
   width: 100%;
-  height: 120px;
+  height: 80px;
+  background-color: #e3e3e3;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
 }
-.ButtonBlock{
+.ButtonBlock {
   display: flex;
   align-items: center;
   position: absolute;
   left: 50%;
-  height: 120px;
+  height: 60px;
   width: 50%;
 }
-.LeftButtonBlock{
+.LeftButtonBlock {
   display: flex;
   align-items: center;
   position: absolute;
-  height: 120px;
+  height: 60px;
   width: 50%;
 }
-#inventory_button{
-  margin-left: 60%;
-  height: 45px;
+#inventory_button:hover {
+  cursor: pointer;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  background-color: darkorange;
+  transition: all 500ms ease;
+}
+#inventory_button {
+  margin-left: 70%;
+  height: 50px;
   width: 200px;
   border-radius: 13px;
   color: white;
   font-size: 18px;
   outline: none;
   border: none;
-  background-color: #FFA500;
+  margin-top: 25px;
+  font-weight: 600;
+  background-color: #ffa500;
 }
-h2{
+h2 {
   margin-left: 30px;
   font-size: 44px;
-
 }
-#dashboard{
+#dashboard {
   position: absolute;
   margin-top: 60px;
   margin-left: 35px;
 }
+.inventory_add_field {
+  padding: 22px 26px;
+  width: 50%;
+  margin-left: 2.5%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid lightgray;
+  height: 350px;
+  margin-top: 100px;
+}
+#item {
+  height: 40px;
+  margin-top: 20px;
+  margin-left: 7px;
+  width: 180px;
+  border: none;
+  text-align: center;
+  border-bottom: 1px solid black;
+}
+#item_description {
+  height: 40px;
+  margin-top: 10px;
+  margin-left: 7px;
+  width: 220px;
+  border: none;
+  text-align: center;
+  border-bottom: 1px solid black;
+}
+.select_category {
+  height: 40px;
+  margin-top: 20px;
+  margin-left: 7px;
+  width: 180px;
+  text-align: center;
+  border-radius: 5px;
+  outline: none;
+  font-size: 18px;
+}
+.select_category:hover {
+  cursor: pointer;
+}
+#unit_cost {
+  height: 40px;
+  margin-top: 10px;
+  margin-left: 7px;
+  width: 220px;
+  border: none;
+  text-align: center;
+  border-bottom: 1px solid black;
+}
+#save_button {
+  width: 175px;
+  color: white;
+  background-color: lightseagreen;
+  outline: none;
+  font-weight: 600;
+  height: 50px;
+  font-size: 18px;
+  border-radius: 13px;
+  border: none;
+  margin-top: 25px;
+}
+#save_button:hover {
+  cursor: pointer;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  background-color: seagreen;
+  transition: all 500ms ease;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+.InventoryTable {
+  display: flex;
+  overflow-y: scroll;
+  height: 200px;
+  width: 100%;
+  margin-top: 45px;
+}
+.Inventory_table {
+  border-collapse: collapse;
+  margin: auto;
+  font-size: 16px;
+  width: 98%;
+  height: auto;
+  font-family: "roboto", sans-serif;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0, 0.15);
+}
+.Inventory_table thead {
+  position: sticky;
+  top: 0;
+}
+.Inventory_table thead tr {
+  background-color: #ffa500;
+  color: #ffffff;
+  text-align: left;
+}
+.Inventory_table thead tr th {
+  text-align: center;
+  vertical-align: middle;
+  padding: 14px 25px;
+}
+.Inventory_table tbody tr td {
+  text-align: center;
+  vertical-align: middle;
+  padding: 14px 25px;
+}
+.Inventory_table tbody tr {
+  border-bottom: 1px solid #dddddd;
+  background-color: #f3f3f3;
+  color: #141414;
+  overflow-y: auto;
+}
+.Inventory_table tbody tr :nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+.Inventory_table tbody tr:last-of-type {
+  border-bottom: 2px solid #ffa500;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -64,7 +189,24 @@ h2{
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.btn {
+  border: none;
+  color: white;
+  padding: 5px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 5px;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.btn-edit {
+  background-color: #008cba;
+}
+.btn-delete {
+  background-color: #f44336;
+}
 .App-link {
   color: #61dafb;
 }

@@ -15,6 +15,9 @@
       "auth": {
         "inventorytrackbttech3128426b": {}
       },
+      "api": {
+        "inventorytrackbttech": {}
+      },
       "storage": {
         "imageStorage2": {}
       }
