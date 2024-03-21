@@ -1,7 +1,11 @@
-type Note @model @auth(rules: [{ allow: public }]) {
+type Stock @model @auth(rules: [{ allow: public }]) {
   id: ID!
   item_name: String!
   item_description: String
   category: String
   unit_cost: String
+}
+
+type Query {
+  listStock: [Stock]
 }
