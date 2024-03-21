@@ -23,26 +23,30 @@ export default function NoteCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    name: "",
-    description: "",
-    image: "",
+    item_name: "",
+    item_description: "",
+    category: "",
+    unit_cost: "",
   };
-  const [name, setName] = React.useState(initialValues.name);
-  const [description, setDescription] = React.useState(
-    initialValues.description
+  const [item_name, setItem_name] = React.useState(initialValues.item_name);
+  const [item_description, setItem_description] = React.useState(
+    initialValues.item_description
   );
-  const [image, setImage] = React.useState(initialValues.image);
+  const [category, setCategory] = React.useState(initialValues.category);
+  const [unit_cost, setUnit_cost] = React.useState(initialValues.unit_cost);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setName(initialValues.name);
-    setDescription(initialValues.description);
-    setImage(initialValues.image);
+    setItem_name(initialValues.item_name);
+    setItem_description(initialValues.item_description);
+    setCategory(initialValues.category);
+    setUnit_cost(initialValues.unit_cost);
     setErrors({});
   };
   const validations = {
-    name: [{ type: "Required" }],
-    description: [],
-    image: [],
+    item_name: [{ type: "Required" }],
+    item_description: [],
+    category: [],
+    unit_cost: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -70,9 +74,10 @@ export default function NoteCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          name,
-          description,
-          image,
+          item_name,
+          item_description,
+          category,
+          unit_cost,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -127,82 +132,112 @@ export default function NoteCreateForm(props) {
       {...rest}
     >
       <TextField
-        label="Name"
+        label="Item name"
         isRequired={true}
         isReadOnly={false}
-        value={name}
+        value={item_name}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              name: value,
-              description,
-              image,
+              item_name: value,
+              item_description,
+              category,
+              unit_cost,
             };
             const result = onChange(modelFields);
-            value = result?.name ?? value;
+            value = result?.item_name ?? value;
           }
-          if (errors.name?.hasError) {
-            runValidationTasks("name", value);
+          if (errors.item_name?.hasError) {
+            runValidationTasks("item_name", value);
           }
-          setName(value);
+          setItem_name(value);
         }}
-        onBlur={() => runValidationTasks("name", name)}
-        errorMessage={errors.name?.errorMessage}
-        hasError={errors.name?.hasError}
-        {...getOverrideProps(overrides, "name")}
+        onBlur={() => runValidationTasks("item_name", item_name)}
+        errorMessage={errors.item_name?.errorMessage}
+        hasError={errors.item_name?.hasError}
+        {...getOverrideProps(overrides, "item_name")}
       ></TextField>
       <TextField
-        label="Description"
+        label="Item description"
         isRequired={false}
         isReadOnly={false}
-        value={description}
+        value={item_description}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              name,
-              description: value,
-              image,
+              item_name,
+              item_description: value,
+              category,
+              unit_cost,
             };
             const result = onChange(modelFields);
-            value = result?.description ?? value;
+            value = result?.item_description ?? value;
           }
-          if (errors.description?.hasError) {
-            runValidationTasks("description", value);
+          if (errors.item_description?.hasError) {
+            runValidationTasks("item_description", value);
           }
-          setDescription(value);
+          setItem_description(value);
         }}
-        onBlur={() => runValidationTasks("description", description)}
-        errorMessage={errors.description?.errorMessage}
-        hasError={errors.description?.hasError}
-        {...getOverrideProps(overrides, "description")}
+        onBlur={() => runValidationTasks("item_description", item_description)}
+        errorMessage={errors.item_description?.errorMessage}
+        hasError={errors.item_description?.hasError}
+        {...getOverrideProps(overrides, "item_description")}
       ></TextField>
       <TextField
-        label="Image"
+        label="Category"
         isRequired={false}
         isReadOnly={false}
-        value={image}
+        value={category}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              name,
-              description,
-              image: value,
+              item_name,
+              item_description,
+              category: value,
+              unit_cost,
             };
             const result = onChange(modelFields);
-            value = result?.image ?? value;
+            value = result?.category ?? value;
           }
-          if (errors.image?.hasError) {
-            runValidationTasks("image", value);
+          if (errors.category?.hasError) {
+            runValidationTasks("category", value);
           }
-          setImage(value);
+          setCategory(value);
         }}
-        onBlur={() => runValidationTasks("image", image)}
-        errorMessage={errors.image?.errorMessage}
-        hasError={errors.image?.hasError}
-        {...getOverrideProps(overrides, "image")}
+        onBlur={() => runValidationTasks("category", category)}
+        errorMessage={errors.category?.errorMessage}
+        hasError={errors.category?.hasError}
+        {...getOverrideProps(overrides, "category")}
+      ></TextField>
+      <TextField
+        label="Unit cost"
+        isRequired={false}
+        isReadOnly={false}
+        value={unit_cost}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              item_name,
+              item_description,
+              category,
+              unit_cost: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.unit_cost ?? value;
+          }
+          if (errors.unit_cost?.hasError) {
+            runValidationTasks("unit_cost", value);
+          }
+          setUnit_cost(value);
+        }}
+        onBlur={() => runValidationTasks("unit_cost", unit_cost)}
+        errorMessage={errors.unit_cost?.errorMessage}
+        hasError={errors.unit_cost?.hasError}
+        {...getOverrideProps(overrides, "unit_cost")}
       ></TextField>
       <Flex
         justifyContent="space-between"

@@ -17,6 +17,9 @@
       },
       "storage": {
         "imageStorage2": {}
+      },
+      "api": {
+        "inventorytrackbttech": {}
       }
     }
   }

@@ -3,8 +3,6 @@ import "./App.css";
 import "@aws-amplify/ui-react/styles.css";
 import { generateClient as apiClientGenerator } from "aws-amplify/api";
 import { FaEdit, FaTrash } from "react-icons/fa";
-// import { Link } from "react-router-dom";
-// import { ToastContainer } from "react-toastify";
 import {
   Button,
   Flex,
@@ -14,38 +12,34 @@ import {
   View,
   withAuthenticator,
 } from "@aws-amplify/ui-react";
-import { listNotes } from "./graphql/queries";
+import { listStock } from "./graphql/queries";
 import {
-  createNote as createNoteMutation,
-  deleteNote as deleteNoteMutation,
+  createStock as createStockMutation,
+  deleteStock as deleteStockMutation,
 } from "./graphql/mutations";
 
 const apiClient = apiClientGenerator();
 
-const initialInventoryState = {
-  inventoryState: false,
-};
-
-const initialformValues = {
-  item_name: "",
-  item_description: "",
-  categoty: "",
-  unit_cost: "",
-};
+// const initialformValues = {
+//   item_name: "",
+//   item_description: "",
+//   categoty: "",
+//   unit_cost: "",
+// };
 
 const App = ({ signOut }) => {
-  const [notes, setNotes] = useState([]);
+  const [Stock, setStock] = useState([]);
 
   //state for controlling add inventory visibility
-  const [addInventory, setAddInvetory] = useState(initialInventoryState);
+  const [addInventory, setAddInvetory] = useState(false);
   const { inventoryState } = addInventory;
 
-  //state for saving values entered on form
-  const [formValues, setFormValues] = useState(initialformValues);
-  const { item_name, item_description, category, unit_cost } = formValues;
+  // //state for saving values entered on form
+  // const [formValues, setFormValues] = useState(initialformValues);
+  // const { item_name, item_description, category, unit_cost } = formValues;
 
   useEffect(() => {
-    fetchNotes();
+    fetchStock();
   }, []);
 
   //function for setting setAddinventory to true
@@ -53,46 +47,48 @@ const App = ({ signOut }) => {
     setAddInvetory(!addInventory);
   };
 
-  //funtion for fetching all selected inputs from add_inventory form
-  const handleChangeInventoryForm = (e) => {
-    const { name, value } = e.target;
-    setFormValues((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+  // //funtion for fetching all selected inputs from add_inventory form
+  // const handleChangeInventoryForm = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormValues((prevState) => ({
+  //     ...prevState,
+  //     [name]: value,
+  //   }));
+  // };
+
+  // console.log("formvalues:", formValues);
+
+  const fetchStock = async () => {
+    const apiData = await apiClient.graphql({ query: listStock });
+    const StockFromAPI = apiData.data.listStock.items;
+    setStock(StockFromAPI);
   };
 
-  console.log("formvalues:", formValues);
-
-  async function fetchNotes() {
-    const apiData = await apiClient.graphql({ query: listNotes });
-    const notesFromAPI = apiData.data.listNotes.items;
-    setNotes(notesFromAPI);
-  }
-
-  async function createNote(event) {
+  const createStock = async (event) => {
     event.preventDefault();
     const form = new FormData(event.target);
     const data = {
-      name: form.get("name"),
-      description: form.get("description"),
+      item_name: form.get("item_name"),
+      item_description: form.get("item_description"),
+      category: form.get("category"),
+      unit_cost: form.get("unit_cost"),
     };
     await apiClient.graphql({
-      query: createNoteMutation,
+      query: createStockMutation,
       variables: { input: data },
     });
-    fetchNotes();
+    fetchStock();
     event.target.reset();
-  }
+  };
 
-  async function deleteNote({ id }) {
-    const newNotes = notes.filter((note) => note.id !== id);
-    setNotes(newNotes);
+  const deleteStock = async ({ id }) => {
+    const newStock = Stock.filter((stock) => stock.id !== id);
+    setStock(newStock);
     await apiClient.graphql({
-      query: deleteNoteMutation,
+      query: deleteStockMutation,
       variables: { input: { id } },
     });
-  }
+  };
 
   return (
     <View className="App">
@@ -114,7 +110,7 @@ const App = ({ signOut }) => {
         </View>
       </View>
       {addInventory && (
-        <View className="inventory_add_field">
+        <View className="inventory_add_field" onSubmit={createStock}>
           <View className="Field">
             <label htmlFor="item_name">Item name :</label>
             <input
@@ -122,8 +118,6 @@ const App = ({ signOut }) => {
               name="item_name"
               id="item"
               placeholder="Item name"
-              value={item_name}
-              onChange={handleChangeInventoryForm}
             />
           </View>
           <View className="Field">
@@ -133,18 +127,11 @@ const App = ({ signOut }) => {
               name="item_description"
               id="item_description"
               placeholder="Item description"
-              value={item_description}
-              onChange={handleChangeInventoryForm}
             />
           </View>
           <View className="Field">
             <label htmlFor="item_description">Category :</label>
-            <select
-              className="select_category"
-              name="category"
-              value={category}
-              onChange={handleChangeInventoryForm}
-            >
+            <select className="select_category" name="category">
               <option value="">Select category</option>
               <option value="Electronics">Electronics</option>
               <option value="Clothing">Clothing</option>
@@ -169,8 +156,6 @@ const App = ({ signOut }) => {
               name="unit_cost"
               id="unit_cost"
               placeholder="Unit cost"
-              value={unit_cost}
-              onChange={handleChangeInventoryForm}
             />
           </View>
           <input
@@ -194,24 +179,31 @@ const App = ({ signOut }) => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>bag</td>
-              <td>Bought from Dubai</td>
-              <td>Stationaries</td>
-              <td>10 USD</td>
-              <td>
-                <label>
-                  <button className="btn btn-edit">
-                    <FaEdit />
-                  </button>
-                </label>
-                <button className="btn btn-delete">
-                  {/* <ToastContainer /> */}
-                  <FaTrash />
-                </button>
-              </td>
-            </tr>
+            {Stock.map((stock, index) => {
+              return (
+                <tr key={stock.id}>
+                  <td>{index + 1}</td>
+                  <td>{stock.item_name}</td>
+                  <td>{stock.iten_description}</td>
+                  <td>{stock.category}</td>
+                  <td>{stock.unit_cost}</td>
+                  <td>
+                    <label>
+                      <button className="btn btn-edit">
+                        <FaEdit />
+                      </button>
+                    </label>
+                    <button
+                      className="btn btn-delete"
+                      variation="link"
+                      onClick={() => deleteStock(stock)}
+                    >
+                      <FaTrash />
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </View>
