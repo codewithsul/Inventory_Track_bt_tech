@@ -2,7 +2,7 @@
 // this is an auto generated file. This will be overwritten
 
 export const createStock = /* GraphQL */ `
-  mutation createStock(
+  mutation CreateStock(
     $input: CreateStockInput!
     $condition: ModelStockConditionInput
   ) {
@@ -19,9 +19,9 @@ export const createStock = /* GraphQL */ `
   }
 `;
 export const updateStock = /* GraphQL */ `
-  mutation updateStock(
+  mutation UpdateStock(
     $input: UpdateStockInput!
-    $condition: ModelNoteConditionInput
+    $condition: ModelStockConditionInput
   ) {
     updateStock(input: $input, condition: $condition) {
       id
@@ -40,7 +40,7 @@ export const deleteStock = /* GraphQL */ `
     $input: DeleteStockInput!
     $condition: ModelStockConditionInput
   ) {
-    deleteNote(input: $input, condition: $condition) {
+    deleteStock(input: $input, condition: $condition) {
       id
       item_name
       item_description

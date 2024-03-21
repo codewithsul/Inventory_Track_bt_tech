@@ -1,8 +1,22 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const listStock = /* GraphQL */ `
+  query ListStock {
+    listStock {
+      id
+      item_name
+      item_description
+      category
+      unit_cost
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
 export const getStock = /* GraphQL */ `
-  query getStock($id: ID!) {
+  query GetStock($id: ID!) {
     getStock(id: $id) {
       id
       item_name
@@ -15,13 +29,13 @@ export const getStock = /* GraphQL */ `
     }
   }
 `;
-export const listStock = /* GraphQL */ `
-  query listStock(
-    $filter: ModelNoteFilterInput
+export const listStocks = /* GraphQL */ `
+  query ListStocks(
+    $filter: ModelStockFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listStock(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listStocks(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         item_name
