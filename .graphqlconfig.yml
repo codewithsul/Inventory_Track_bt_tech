@@ -1,6 +1,6 @@
 projects:
   inventorytrackbttech:
-    schemaPath: amplify/backend/api/inventorytrackbttech/build/schema.graphql
+    schemaPath: src/graphql/schema.json
     includes:
       - src/graphql/**/*.js
     excludes:
@@ -10,9 +10,6 @@ projects:
         codeGenTarget: javascript
         generatedFileName: ''
         docsFilePath: src/graphql
-        region: ap-southeast-2
-        apiId: null
-        maxDepth: 2
 extensions:
   amplify:
     version: 3

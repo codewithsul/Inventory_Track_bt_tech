@@ -5,7 +5,3 @@ type Stock @model @auth(rules: [{ allow: public }]) {
   category: String
   unit_cost: String
 }
-
-type Query {
-  listStock: [Stock]
-}

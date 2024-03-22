@@ -1,20 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const listStock = /* GraphQL */ `
-  query ListStock {
-    listStock {
-      id
-      item_name
-      item_description
-      category
-      unit_cost
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
 export const getStock = /* GraphQL */ `
   query GetStock($id: ID!) {
     getStock(id: $id) {
